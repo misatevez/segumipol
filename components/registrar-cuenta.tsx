@@ -1,4 +1,4 @@
-
+'use client'
 import { Label } from "@/components/ui/label";
 import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
