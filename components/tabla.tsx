@@ -11,7 +11,9 @@ interface TablaProps {
   titulo?: string;
   searchPlaceholder?: string;
   buttonText?: string;
-  linkButton: string;
+  linkButtonAdd: string;
+  onDelete: any,
+  onEdit:any
 }
 
 export function Tabla({
@@ -20,7 +22,9 @@ export function Tabla({
   headers = [],
   rows = [],
   buttonText = "Add User",
-  linkButton = "/"
+  linkButtonAdd = "/",
+  onDelete,
+  onEdit
 }: TablaProps) {
 
   const router = useRouter();
@@ -53,26 +57,24 @@ export function Tabla({
                   </TableCell>
                 ))}
 
-<TableCell>
-                <Button size="sm" variant="outline">
-                  Ver
-                </Button>
-                <Button className="ml-2" size="sm" variant="outline">
-                  Editar
-                </Button>
-                <Button className="ml-2" size="sm" variant="outline">
-                  Borrar
-                </Button>
-              </TableCell>
-              
+                <TableCell>
+                  <Button  onClick={() => onEdit(row[0])} size="sm" variant="outline">
+                    Editar
+                  </Button>
+                  <Button onClick={() => onDelete(row[0])} className="ml-2" size="sm" variant="outline">
+
+                    Borrar
+                  </Button>
+                </TableCell>
+
               </TableRow>
 
-              
+
             ))}
           </TableBody>
         </Table>
         <div className="flex justify-end p-4">
-          <Link className="p-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#0FB79D] text-gray-50 hover:bg-[#0FB79D]/90" href={linkButton}>{buttonText}</Link>
+          <Link className="p-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#0FB79D] text-gray-50 hover:bg-[#0FB79D]/90" href={linkButtonAdd}>{buttonText}</Link>
         </div>
       </div>
     </div>

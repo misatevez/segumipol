@@ -1,12 +1,16 @@
-import { RegistrarCuentaAbogados } from "@/components/registrar-cuenta-abogados";
 
+import {FormularioRegistro} from '@/components/registrar-cuenta'
+import FormField from "@/components/ui/FormField";
+import { fieldConfigs, especialidades } from "@/config/formFields";
 
-const Page = () => {
+const RegistroAbogado = () => {
     return (
-       <RegistrarCuentaAbogados />
+      <FormularioRegistro tipo="abogado" especialidades={especialidades}>
+        {Object.values(fieldConfigs).map(config => (
+            <FormField key={config.id} {...config} />
+        ))}
+      </FormularioRegistro>
     );
 }
 
-
-
-export default Page
+export default RegistroAbogado;

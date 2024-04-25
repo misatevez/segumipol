@@ -69,7 +69,7 @@ export function IngresarCuenta() {
           <div>
             <Button
               className="group relative w-full flex justify-center py-2 px-4 border border-gray-200 border-transparent text-sm font-medium rounded-md text-white bg-[#0FB79D] hover:bg-[#0FB79D]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-[#0FB79D] "
-              onClick={() => {router.push('/dashboard-client')}}
+              onClick={() => {router.push('/dashboard')}}
             >
               Ingresar
             </Button>
@@ -78,7 +78,7 @@ export function IngresarCuenta() {
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600 ">
             No tienes cuenta?
-            <Link className="font-medium text-[#0FB79D] hover:text-[#0FB79D]/90 ml-1" href="/register">
+            <Link className="font-medium text-[#0FB79D] hover:text-[#0FB79D]/90 ml-1" href="/register/client">
               Registrate
             </Link>
           </p>

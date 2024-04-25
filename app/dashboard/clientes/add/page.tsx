@@ -1,13 +1,17 @@
 
+import {FormularioRegistro} from "@/components/registrar-cuenta";
+import FormField from "@/components/ui/FormField";
+import { fieldConfigs } from "@/config/formFields";
 
-const page = () => {
+const RegistroCliente = () => {
     return (
-        <div>
-            Add cliente
-        </div>
+      <FormularioRegistro tipo="cliente">
+        {Object.values(fieldConfigs).map(config => (
+            <FormField key={config.id} {...config} />
+        ))}
+
+      </FormularioRegistro>
     );
 }
 
-
-
-export default page
+export default RegistroCliente;

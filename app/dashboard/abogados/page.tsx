@@ -1,19 +1,73 @@
+'use client'
 import { Tabla } from "@/components/tabla";
+import { deleteRecord, deleteUserFromAuth } from "@/lib/supabaseCrud";
+import { fetchRecordsByCondition } from '@/lib/supabaseQueries';  
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
+    const router = useRouter();
+    const [rows, setRows] = useState([]);
+    const [refreshCount, setRefreshCount] = useState(0);  // Contador para forzar la recarga de datos
 
     const headers = [
-        "ID", "Nombre", "Apellido", "N° Cip","Area", "Email", "Acciones"
-    ]
+        "ID", "Nombre", "Apellido", "Area", "Email", "Acciones"
+    ];
 
-    const rows = [
-       [ "1", "Bryan", "Segumipol", "12345678", "Penal", "Bryan@segumipol.com"]
-    ]
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchRecordsByCondition("Usuarios", { EsAbogado: true });
+                const formattedRows = data.map(user => [
+                    user.user_id,
+                    user.nombre,
+                    user.apellido,
+                    user.area,
+                    user.email,
+                ]);
+
+                setRows(formattedRows);
+            } catch (error) {
+                console.error("Error fetching abogados:", error.message);
+            }
+        };
+
+        fetchData();
+    }, [refreshCount]);  // Dependencia en refreshCount
+
+    const handleDelete = async (user_id) => {
+        try {
+            // Primero elimina el usuario de la base de datos (ajusta esta llamada a tu función específica)
+            const deleteData = await deleteRecord("Usuarios", user_id, 'user_id');
+            console.log('Usuario borrado de la base de datos:', deleteData);
+    
+            // Si la eliminación en la base de datos es exitosa, procede a eliminarlo de Auth
+            const authDeleteResponse = await deleteUserFromAuth(user_id);
+            console.log(authDeleteResponse.message);
+    
+            // Incrementa refreshCount para reactivar useEffect y recargar los datos
+            setRefreshCount(prev => prev + 1);
+        } catch (error) {
+            console.error("Error deleting user:", error.message);
+        }
+    };
+
+    const handleEdit = async (user_id) => {
+        router.push(`/dashboard/abogados/${user_id}`)
+    }
 
     return (
-        <Tabla titulo="Abogados" headers={headers} rows={rows} buttonText="Agregar" searchPlaceholder="Buscar abogados" linkButton="/dashboard/abogados/add" />
+        <Tabla 
+            titulo="Abogados" 
+            headers={headers} 
+            rows={rows} 
+            buttonText="Agregar" 
+            searchPlaceholder="Buscar abogados" 
+            linkButtonAdd="/dashboard/abogados/add" 
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+        />
     );
-}
+};
 
-
-export default page
+export default Page;
