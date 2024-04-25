@@ -3,7 +3,7 @@ import { fetchRecordById } from "@/lib/supabaseQueries";
 import { useEffect, useState } from "react";
 
 
-const Page = ({params}) => {
+const Page = ({params}:any) => {
 
 const user_id = params.slug;
 
@@ -15,7 +15,7 @@ useEffect(() => {
         const data = await fetchRecordById('Usuarios', user_id, 'user_id');
         setUser(data);
     
-} catch (error) {
+} catch (error:any) {
     console.error("Error fetching abogados:", error.message);
 }
      }

@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
     const router = useRouter();
-    const [rows, setRows] = useState([]);
+    type MyArrayType = any[][]; 
+    const [rows, setRows] = useState<MyArrayType>([]);
     const [refreshCount, setRefreshCount] = useState(0);  // Contador para forzar la recarga de datos
 
     const headers = [
@@ -27,7 +28,7 @@ const Page = () => {
                 ]);
 
                 setRows(formattedRows);
-            } catch (error) {
+            } catch (error:any) {
                 console.error("Error fetching abogados:", error.message);
             }
         };
@@ -35,7 +36,7 @@ const Page = () => {
         fetchData();
     }, [refreshCount]);  // Dependencia en refreshCount
 
-    const handleDelete = async (user_id) => {
+    const handleDelete = async (user_id:any) => {
         try {
             // Primero elimina el usuario de la base de datos (ajusta esta llamada a tu función específica)
             const deleteData = await deleteRecord("Usuarios", user_id, 'user_id');
@@ -47,12 +48,12 @@ const Page = () => {
     
             // Incrementa refreshCount para reactivar useEffect y recargar los datos
             setRefreshCount(prev => prev + 1);
-        } catch (error) {
+        } catch (error:any) {
             console.error("Error deleting user:", error.message);
         }
     };
 
-    const handleEdit = async (user_id) => {
+    const handleEdit = async (user_id:any ) => {
         router.push(`/dashboard/abogados/${user_id}`)
     }
 

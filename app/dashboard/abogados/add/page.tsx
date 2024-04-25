@@ -19,13 +19,13 @@ const RegistroAbogado = () => {
     );
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault();
         try {
             const result = await addRecordWithAuth('Usuarios', formData);
             console.log('Registro exitoso:', result);
             // Aquí puedes manejar acciones post-registro, como redireccionar o mostrar un mensaje
-        } catch (error) {
+        } catch (error:any) {
             console.error('Error al registrar:', error.message);
             // Manejar los errores de registro aquí, como mostrar un mensaje de error al usuario
         }

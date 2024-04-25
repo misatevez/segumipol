@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export function useFormData(initialValues = {}) {
+export function useFormData(initialValues) {
   const [formData, setFormData] = useState(initialValues);
 
   const handleChange = (e) => {
